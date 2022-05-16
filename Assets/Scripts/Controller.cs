@@ -51,11 +51,48 @@ public class Controller : MonoBehaviour
         //Matriz de adyacencia
         int[,] matriu = new int[Constants.NumTiles, Constants.NumTiles];
 
-        //TODO: Inicializar matriz a 0's
+//OK        //TODO: Inicializar matriz a 0's
+        //NumTiles es el número de casillas que hay en el tablero (64)
+        for (int i = 0; i < Constants.NumTiles; i++)
+        {
+            for (int j = 0; j < Constants.NumTiles; j++)
+            {
+                matriu[i, j] = 0;
+            }
+        }
 
         //TODO: Para cada posición, rellenar con 1's las casillas adyacentes (arriba, abajo, izquierda y derecha)
+        for (int i = 0; i < Constants.NumTiles; i++)
+        {
+            if (i % Constants.TilesPerRow != 0)
+            {
+                matriu[i, i - 1] = 1;
+            }
+            if (i % Constants.TilesPerRow != Constants.TilesPerRow - 1)
+            {
+                matriu[i, i + 1] = 1;
+            }
+            if (i < Constants.TilesPerRow * (Constants.TilesPerRow - 1))
+            {
+                matriu[i, i + Constants.TilesPerRow] = 1;
+            }
+            if (i >= Constants.TilesPerRow)
+            {
+                matriu[i, i - Constants.TilesPerRow] = 1;
+            }
+        }
 
-        //TODO: Rellenar la lista "adjacency" de cada casilla con los índices de sus casillas adyacentes
+//OK        //TODO: Rellenar la lista "adjacency" de cada casilla con los índices de sus casillas adyacentes
+        for (int i = 0; i < Constants.NumTiles; i++)
+        {
+            for (int j = 0; j < Constants.NumTiles; j++)
+            {
+                if (matriu[i, j] == 1)
+                {
+                    tiles[i].adjacency.Add(j);
+                }
+            }
+        }
 
     }
 
