@@ -272,7 +272,7 @@ public class Controller : MonoBehaviour
                             ListRobber.Add(tiles[adyacent].numTile);  //nos guaramos el elemento en la lista 
                         }
                         tiles[adyacent].selectable = true;  //si no la podemos seleccionar
-                        if (cops[0].GetComponent<CopMove>().currentTile == tiles[adyacent].numTile || cops[1].GetComponent<CopMove>().currentTile == tiles[adyacente].numTile) //si es un policia 
+                        if (cops[0].GetComponent<CopMove>().currentTile == tiles[adyacent].numTile || cops[1].GetComponent<CopMove>().currentTile == tiles[adyacent].numTile) //si es un policia 
                         {
                             tiles[adyacent].selectable = false; //no se puede seleccionar la casilla del policia
                         }
