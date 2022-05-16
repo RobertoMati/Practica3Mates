@@ -20,6 +20,7 @@ public class Controller : MonoBehaviour
     private int clickedTile = -1;
     private int clickedCop = 0;
                     
+    List<int> ListRobber = new List<int>(); //lista para las casillas del ladrón
     void Start()
     {        
         InitTiles();
@@ -225,7 +226,7 @@ public class Controller : MonoBehaviour
 
     public void FindSelectableTiles(bool cop)
     {
-                 
+        //variable para guardarnos el número en el que se encuentra la ficha         
         int indexcurrentTile;        
 
         if (cop==true)
@@ -241,11 +242,46 @@ public class Controller : MonoBehaviour
 
         //TODO: Implementar BFS. Los nodos seleccionables los ponemos como selectable=true
         //Tendrás que cambiar este código por el BFS
-        for(int i = 0; i < Constants.NumTiles; i++)
-        {
-            tiles[i].selectable = true;
-        }
+        //reiniciamos las variables
+        tiles[indexcurrentTile].visited = true;  
+        tiles[indexcurrentTile].distance = 0;
+        tiles[indexcurrentTile].parent = null;
 
+        nodes.Enqueue(tiles[indexcurrentTile]); //de lista de nodes ponemos en la cola la casilla en la que estas
+
+        Tile antes = null; //creamos un objeto para el algoritmo BFS
+
+        while (nodes.Count != 0)
+        {
+            antes = nodes.Dequeue(); //nos guardamos en la variable antes el elemento que quitamos de la cola 
+            int antes2 = antes.numTile; //nos guardamos el numero de la variable
+
+            foreach (int adyacent in tiles[antes2].adjacency) //recorremos los elemento adyacentes a el numero guardado
+            {
+                if (tiles[adyacent].visited == false) //si la primera casilla no esta visitada
+                {
+                    tiles[adyacent].visited = true;  //la ponemos a true
+                    tiles[adyacent].distance = tiles[antes2].distance + 1; //a la distancia del adyacente le asignamos la del nodo en la que se encuentra más uno
+                    tiles[adyacent].parent = tiles[antes2]; //la casilla por la cual llegamos le asignamos el valor de la variable antes 2
+                    nodes.Enqueue(tiles[adyacent]); //añadimos el elemento a la cola de la lista de nodos
+
+                    if (tiles[adyacent].distance <= 2) //comprobamos si la distancia es igual o menor que dos
+                    {
+                        if (cop == false) //si es un ladron
+                        {
+                            ListRobber.Add(tiles[adyacent].numTile);  //nos guaramos el elemento en la lista 
+                        }
+                        tiles[adyacent].selectable = true;  //si no la podemos seleccionar
+                        if (cops[0].GetComponent<CopMove>().currentTile == tiles[adyacent].numTile || cops[1].GetComponent<CopMove>().currentTile == tiles[adyacente].numTile) //si es un policia 
+                        {
+                            tiles[adyacent].selectable = false; //no se puede seleccionar la casilla del policia
+                        }
+                    }
+
+                }
+            }
+
+        }
 
     }
     
