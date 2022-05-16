@@ -61,7 +61,7 @@ public class Controller : MonoBehaviour
             }
         }
 
-        //TODO: Para cada posición, rellenar con 1's las casillas adyacentes (arriba, abajo, izquierda y derecha)
+//OK        //TODO: Para cada posición, rellenar con 1's las casillas adyacentes (arriba, abajo, izquierda y derecha)
         for (int i = 0; i < Constants.NumTiles; i++)
         {
             if (i % Constants.TilesPerRow != 0)
