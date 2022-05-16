@@ -63,20 +63,26 @@ public class Controller : MonoBehaviour
         }
 
 //OK        //TODO: Para cada posición, rellenar con 1's las casillas adyacentes (arriba, abajo, izquierda y derecha)
+        //Constants.NumTiles es el número de casillas que hay en el tablero (64)
         for (int i = 0; i < Constants.NumTiles; i++)
         {
+            //Rellena la casilla adyacente de la izquierda
+            //Constants.TilesPerRow es el número de casillas por fila (8)
             if (i % Constants.TilesPerRow != 0)
             {
                 matriu[i, i - 1] = 1;
             }
+            //Rellena la casilla adyacente de la derecha
             if (i % Constants.TilesPerRow != Constants.TilesPerRow - 1)
             {
                 matriu[i, i + 1] = 1;
             }
+            //Rellea la casilla adyacente de arriba
             if (i < Constants.TilesPerRow * (Constants.TilesPerRow - 1))
             {
                 matriu[i, i + Constants.TilesPerRow] = 1;
             }
+            //Rellea la casilla adyacente de abajo
             if (i >= Constants.TilesPerRow)
             {
                 matriu[i, i - Constants.TilesPerRow] = 1;
