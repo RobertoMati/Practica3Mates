@@ -172,6 +172,7 @@ public class Controller : MonoBehaviour
 
     }
 
+    
     public void RobberTurn()
     {
         clickedTile = robber.GetComponent<RobberMove>().currentTile;
@@ -183,8 +184,27 @@ public class Controller : MonoBehaviour
         - Movemos al caco a esa casilla
         - Actualizamos la variable currentTile del caco a la nueva casilla
         */
-        robber.GetComponent<RobberMove>().MoveToTile(tiles[robber.GetComponent<RobberMove>().currentTile]);
+
+        //Creo una lista vacía para el robber con las casillas seleccionables
+        List<int> selectableTiles = new List<int>();
+        //Recorro todas las casillas y las guardo en la lista si es seleccionable
+        for (int i = 0; i < Constants.NumTiles; i++)
+        {
+            //Si la casilla es seleccionable, la añado a la lista
+            if (tiles[i].selectable)
+            {
+                selectableTiles.Add(i);
+            }
+        }
+        //Creo una variable aleatoria para elegir una casilla
+        int random = Random.Range(0, selectableTiles.Count);
+        //Movemos al robber a la casilla elegida aleatoriamente
+        robber.GetComponent<RobberMove>().MoveToTile(tiles[selectableTiles[random]]);
+        robber.GetComponent<RobberMove>().currentTile = tiles[selectableTiles[random]].numTile; 
+        //Actualizo la variable currentTile del robber a la nueva casilla
+        tiles[selectableTiles[random]].current = true;
     }
+    
 
     public void EndGame(bool end)
     {
